@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">png</string>
+    <string name="hint">提示</string>
+    <string name="permission">当前的应用程序缺少必要的权限，这些权限暂时不可用。如有必要，单击[确定]按钮进入设置中心进行授权。</string>
+    <string name="sure">确定</string>
+    <string name="cancel">取消</string>
+    <string name="about_us">关于我们</string>
+    <string name="setting">设置</string>
+    <string name="language">语言</string>
+    <string name="version_update">版本更新</string>
+    <string name="Language_selection">语言选择</string>
+    <string name="exit_tip">再按一次退出程序</string>
+    <string name="album">相册</string>
+    <string name="download_pictures_to_device">下载图片到设备</string>
+
+</resources>
