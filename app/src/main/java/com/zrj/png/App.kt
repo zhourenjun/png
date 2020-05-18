@@ -3,6 +3,7 @@ package com.zrj.png
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import com.clj.fastble.BleManager
 import com.zrj.png.utils.locale.LocaleAwareApplication
 import me.jessyan.autosize.AutoSizeConfig
 import kotlin.properties.Delegates
@@ -48,5 +49,11 @@ class App : LocaleAwareApplication() {
 
             }
         })
+
+        BleManager.getInstance().init(this)
+        BleManager.getInstance()
+            .enableLog(true)
+            .setReConnectCount(1, 5000)
+            .setConnectOverTime(20000).operateTimeout = 5000
     }
 }

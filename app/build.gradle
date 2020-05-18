@@ -55,5 +55,5 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:2.3.3'
     implementation 'com.github.quickpermissions:quickpermissions-kotlin:0.4.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
-    implementation 'top.zibin:Luban:1.1.8'
+    implementation 'com.clj.fastble:FastBleLib:2.3.4'
 }
