@@ -32,6 +32,7 @@ class SplashActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         runWithPermissions(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,
             options = quickPermissionsOption

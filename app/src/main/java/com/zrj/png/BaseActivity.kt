@@ -11,7 +11,6 @@ abstract class BaseActivity : LocaleAwareCompatActivity() {
     abstract fun initView()
     abstract fun initData()
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         super.onCreate(savedInstanceState)
         setContentView(attachLayoutRes())
         //初始化沉浸式
@@ -19,14 +18,6 @@ abstract class BaseActivity : LocaleAwareCompatActivity() {
         initView()
         initData()
     }
-
-    protected fun initToolbar(toolbar: Toolbar, homeAsUpEnabled: Boolean, title: String) {
-        ImmersionBar.setTitleBar(this, toolbar)
-        toolbar.title = title
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(homeAsUpEnabled)
-    }
-
 
     open fun initImmersionBar() {
         ImmersionBar.with(this).navigationBarColor(R.color.colorPrimary).init()

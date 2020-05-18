@@ -7,19 +7,18 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.FileProvider
 import com.gyf.barlibrary.ImmersionBar
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
-import com.zrj.png.utils.UriUtil
+import com.zrj.png.utils.LogUtil
 import com.zrj.png.utils.click
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import java.io.File
+import java.io.FileOutputStream
 
 
 /**
@@ -42,6 +41,7 @@ class MainActivity : BaseActivity() {
         ctl_album.click {
             runWithPermissions(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 options = quickPermissionsOption
             ) {
                 val intent = Intent()
@@ -59,7 +59,7 @@ class MainActivity : BaseActivity() {
 
     }
 
-    private var path = ""
+    private lateinit var cropImageUri: Uri
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -68,24 +68,12 @@ class MainActivity : BaseActivity() {
         }
         when (requestCode) {
             REQUEST_CODE_ALBUM -> {
-                path = File(
-                    Environment.getExternalStorageDirectory(),
-                    "${System.currentTimeMillis()}.png"
-                ).path
+                cropImageUri = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().path + "/" + "${System.currentTimeMillis()}.png")
+
                 val intent = Intent("com.android.camera.action.CROP")
-                intent.setDataAndType(
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                        data?.data
-                    } else {
-                        FileProvider.getUriForFile(
-                            this,
-                            "com.zrj.png.fileProvider",
-                            File(UriUtil.getPath(data?.data)?:"")
-                        )
-                    }, "image/*"
-                )
+                intent.setDataAndType(data?.data, "image/*")
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, path)
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, cropImageUri)
                 intent.putExtra("crop", "true")
                 intent.putExtra("aspectX", 1)
                 intent.putExtra("aspectY", 1)
@@ -98,8 +86,17 @@ class MainActivity : BaseActivity() {
                 startActivityForResult(intent, REQUEST_CODE_CROP)
             }
             REQUEST_CODE_CROP -> {
-                val cropBitmap = BitmapFactory.decodeFile(path)
-                iv.setImageBitmap(cropBitmap)
+                LogUtil.e(cropImageUri.path.toString())
+                val options = BitmapFactory.Options()
+                options.inPreferredConfig = Bitmap.Config.RGB_565
+                val bm = BitmapFactory.decodeFile(cropImageUri.path.toString(),  options)
+                iv.setImageBitmap(bm)
+                //val fd = contentResolver.openFileDescriptor(cropImageUri, "r")
+                //if (fd != null) {
+                //    val bitmap = BitmapFactory.decodeFileDescriptor(fd.fileDescriptor)
+                //	fd.close()
+                //    iv.setImageBitmap(bitmap)
+                //}
             }
         }
     }
