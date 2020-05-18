@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 
 
 /**
@@ -68,7 +69,8 @@ class MainActivity : BaseActivity() {
         }
         when (requestCode) {
             REQUEST_CODE_ALBUM -> {
-                cropImageUri = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().path + "/" + "${System.currentTimeMillis()}.png")
+                cropImageUri =
+                    Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().path + "/" + "${System.currentTimeMillis()}.png")
 
                 val intent = Intent("com.android.camera.action.CROP")
                 intent.setDataAndType(data?.data, "image/*")
@@ -87,16 +89,32 @@ class MainActivity : BaseActivity() {
             }
             REQUEST_CODE_CROP -> {
                 LogUtil.e(cropImageUri.path.toString())
+                LogUtil.e("${File(cropImageUri.path).length() / 1024}kb")
+
                 val options = BitmapFactory.Options()
                 options.inPreferredConfig = Bitmap.Config.RGB_565
-                val bm = BitmapFactory.decodeFile(cropImageUri.path.toString(),  options)
+                val bm = BitmapFactory.decodeFile(cropImageUri.path.toString(), options)
                 iv.setImageBitmap(bm)
-                //val fd = contentResolver.openFileDescriptor(cropImageUri, "r")
-                //if (fd != null) {
-                //    val bitmap = BitmapFactory.decodeFileDescriptor(fd.fileDescriptor)
-                //	fd.close()
-                //    iv.setImageBitmap(bitmap)
-                //}
+//                val fd = contentResolver.openFileDescriptor(cropImageUri, "r")
+//                if (fd != null) {
+//                    val bitmap = BitmapFactory.decodeFileDescriptor(fd.fileDescriptor)
+//                	fd.close()
+//                    iv.setImageBitmap(bitmap)
+//                }
+//                val path = "file://" + "/" + Environment.getExternalStorageDirectory().path + "/" + "compress.png"
+
+//                val cropFile =  File(Environment.getExternalStorageDirectory(), "compress.png")
+//                try {
+//                    if (cropFile.exists()) {
+//                        cropFile.delete()
+//                    }
+//                    cropFile.createNewFile()
+//                } catch ( e: IOException) {
+//                    e.printStackTrace()
+//                }
+//                val os = FileOutputStream(cropFile)
+//                bm.compress(Bitmap.CompressFormat.PNG, 100, os)
+//                LogUtil.e("${cropFile.length() / 1024}kb")
             }
         }
     }
