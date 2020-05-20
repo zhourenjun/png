@@ -18,10 +18,7 @@ import com.clj.fastble.BleManager
 import com.gyf.barlibrary.ImmersionBar
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
-import com.zrj.png.utils.LogUtil
-import com.zrj.png.utils.Preference
-import com.zrj.png.utils.click
-import com.zrj.png.utils.toast
+import com.zrj.png.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 
@@ -131,26 +128,15 @@ class MainActivity : BaseActivity() {
                 options.inPreferredConfig = Bitmap.Config.RGB_565
                 val bm = BitmapFactory.decodeFile(cropImageUri.path.toString(), options)
                 iv.setImageBitmap(bm)
+
 //                val fd = contentResolver.openFileDescriptor(cropImageUri, "r")
 //                if (fd != null) {
 //                    val bitmap = BitmapFactory.decodeFileDescriptor(fd.fileDescriptor)
 //                	fd.close()
 //                    iv.setImageBitmap(bitmap)
 //                }
-//                val path = "file://" + "/" + Environment.getExternalStorageDirectory().path + "/" + "compress.png"
 
-//                val cropFile =  File(Environment.getExternalStorageDirectory(), "compress.png")
-//                try {
-//                    if (cropFile.exists()) {
-//                        cropFile.delete()
-//                    }
-//                    cropFile.createNewFile()
-//                } catch ( e: IOException) {
-//                    e.printStackTrace()
-//                }
-//                val os = FileOutputStream(cropFile)
-//                bm.compress(Bitmap.CompressFormat.PNG, 100, os)
-//                LogUtil.e("${cropFile.length() / 1024}kb")
+                BitmapUtil.saveBmp(bm)
             }
         }
     }

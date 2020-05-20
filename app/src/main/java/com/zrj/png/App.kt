@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import com.clj.fastble.BleManager
+import com.tencent.bugly.Bugly
 import com.zrj.png.utils.locale.LocaleAwareApplication
 import me.jessyan.autosize.AutoSizeConfig
 import kotlin.properties.Delegates
@@ -49,7 +50,7 @@ class App : LocaleAwareApplication() {
 
             }
         })
-
+        Bugly.init(applicationContext, "0104607301", BuildConfig.DEBUG)
         BleManager.getInstance().init(this)
         BleManager.getInstance()
             .enableLog(true)
