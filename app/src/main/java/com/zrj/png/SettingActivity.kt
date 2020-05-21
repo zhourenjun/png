@@ -17,9 +17,6 @@ class SettingActivity : BaseActivity() {
         ImmersionBar.setTitleBar(this, toolbar)
         iv_back.click { finish() }
         ctl_lang.click { startActivity<LanguageActivity>() }
-        ctl_version.click {
-            //todo
-        }
         ctl_about.click { startActivity<AboutActivity>() }
     }
 

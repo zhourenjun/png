@@ -15,4 +15,13 @@
     <string name="album">Album</string>
     <string name="download_pictures_to_device">Download pictures to the device</string>
     <string name="gpsNotifyMsg">Current mobile phone scanning Bluetooth needs to open the positioning function</string>
+    <string name="device">Device</string>
+    <string name="scan">Scan</string>
+    <string name="stop">Stop</string>
+    <string name="no_device">No devices can be scanned</string>
+    <string name="connected">Connected</string>
+    <string name="not_connected">Not Connected</string>
+    <string name="connecting">Connecting</string>
+    <string name="device_not_connected">Device is not connected</string>
+    <string name="please_select_picture">Please select a picture</string>
 </resources>

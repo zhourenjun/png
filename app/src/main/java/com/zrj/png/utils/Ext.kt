@@ -3,7 +3,9 @@ package com.zrj.png.utils
 import android.content.Context
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 
 
 fun View.setVisible(visible: Boolean) {
@@ -41,3 +43,7 @@ fun Context.toast(message: CharSequence) {
 fun Context.toast(@StringRes message: Int) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
+fun Context.colorCompat(color: Int) = ContextCompat.getColor(this, color)
+
+fun Context.drawable(@DrawableRes id: Int) = ContextCompat.getDrawable(this, id)

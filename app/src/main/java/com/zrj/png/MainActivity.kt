@@ -15,18 +15,25 @@ import android.provider.MediaStore
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import com.clj.fastble.BleManager
+import com.clj.fastble.data.BleDevice
 import com.gyf.barlibrary.ImmersionBar
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.zrj.png.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.startActivity
-
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 /**
  * 主页
  * zrj 2020/5/17
  */
+@ExperimentalCoroutinesApi
 class MainActivity : BaseActivity() {
 
     private val REQUEST_CODE_OPEN_GPS = 101
@@ -54,11 +61,29 @@ class MainActivity : BaseActivity() {
             }
         }
 
+        seekBar.setOnTouchListener { _, _ -> true }
+
         ctl_send.click {
+            if (!isConnect){
+                toast(R.string.device_not_connected)
+                return@click
+            }
+            if (photoPath.isEmpty()) {
+                toast(R.string.please_select_picture)
+                return@click
+            }
+            val options = BitmapFactory.Options()
+            options.inPreferredConfig = Bitmap.Config.RGB_565
+            val bm = BitmapFactory.decodeFile(photoPath, options)
+            val byteArray = BitmapConverter.convert(bm)
+
 
         }
 
-        runWithPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, options = quickPermissionsOption) {
+        runWithPermissions(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            options = quickPermissionsOption
+        ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !checkGPSIsOpen()) {
                 AlertDialog.Builder(this)
                     .setTitle(R.string.hint)
@@ -78,12 +103,28 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    private var isConnect = false
+
     override fun initData() {
         if (photoPath.isNotEmpty()) {
             val options = BitmapFactory.Options()
             options.inPreferredConfig = Bitmap.Config.RGB_565
             val bm = BitmapFactory.decodeFile(photoPath, options)
             iv.setImageBitmap(bm)
+        }
+
+        receive<BleDevice>(false, "onDisConnected") {
+            isConnect = false
+            tv_status.text = getString(R.string.not_connected)
+        }
+
+        receive<BleDevice>(false, "onConnectSuccess") {
+            isConnect = true
+            tv_status.text = getString(R.string.connected)
+        }
+
+        receiveTag("onStartConnect") {
+            tv_status.text = getString(R.string.connecting)
         }
     }
 
@@ -129,14 +170,25 @@ class MainActivity : BaseActivity() {
                 val bm = BitmapFactory.decodeFile(cropImageUri.path.toString(), options)
                 iv.setImageBitmap(bm)
 
-//                val fd = contentResolver.openFileDescriptor(cropImageUri, "r")
-//                if (fd != null) {
-//                    val bitmap = BitmapFactory.decodeFileDescriptor(fd.fileDescriptor)
-//                	fd.close()
-//                    iv.setImageBitmap(bitmap)
-//                }
 
-                BitmapUtil.saveBmp(bm)
+
+
+//                try {
+//                    // 存储文件名
+//                    val filename = Environment.getExternalStorageDirectory().absolutePath + "/ble.bmp"
+//                    val file = File(filename)
+//                    if (!file.exists()) {
+//                        file.createNewFile()
+//                    }
+//                    val fileos = FileOutputStream(filename)
+//                    fileos.write(byteArray)
+//                    fileos.flush()
+//                    fileos.close()
+//                } catch (e: FileNotFoundException) {
+//                    e.printStackTrace()
+//                } catch (e: IOException) {
+//                    e.printStackTrace()
+//                }
             }
         }
     }
@@ -180,8 +232,8 @@ class MainActivity : BaseActivity() {
             BleManager.getInstance().enableBluetooth()
         }
 
-        if (mac.isNotEmpty()){
-
+        if (mac.isNotEmpty()) {
+            Ble.connect(mac)
         }
     }
 }

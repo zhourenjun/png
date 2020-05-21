@@ -23,7 +23,7 @@ class PhotoUtils {
 
     companion object {
 
-        private val authorities = "此处改成你自己的authorities"
+        private val authorities = "com.zrj.png.fileProvider"
 
         /**
          * 调用裁剪功能
