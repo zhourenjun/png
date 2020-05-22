@@ -22,12 +22,7 @@ import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOption
 import com.zrj.png.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.startActivity
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
 
 /**
  * 主页
@@ -144,7 +139,7 @@ class MainActivity : BaseActivity() {
 
             REQUEST_CODE_ALBUM -> {
                 cropImageUri =
-                    Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().path + "/" + "${System.currentTimeMillis()}.png")
+                    Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().path + "/" + "${System.currentTimeMillis()}.jpg")
 
                 val intent = Intent("com.android.camera.action.CROP")
                 intent.setDataAndType(data?.data, "image/*")
@@ -153,7 +148,7 @@ class MainActivity : BaseActivity() {
                 intent.putExtra("crop", "true")
                 intent.putExtra("aspectX", 1)
                 intent.putExtra("aspectY", 1)
-                intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG)
+                intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG)
                 intent.putExtra("outputX", 240)
                 intent.putExtra("outputY", 240)
                 intent.putExtra("scale", true)
@@ -163,32 +158,11 @@ class MainActivity : BaseActivity() {
             }
 
             REQUEST_CODE_CROP -> {
-                LogUtil.e(cropImageUri.path.toString())
                 photoPath = cropImageUri.path ?: ""
                 val options = BitmapFactory.Options()
                 options.inPreferredConfig = Bitmap.Config.RGB_565
-                val bm = BitmapFactory.decodeFile(cropImageUri.path.toString(), options)
+                val bm = BitmapFactory.decodeFile(photoPath, options)
                 iv.setImageBitmap(bm)
-
-
-
-
-//                try {
-//                    // 存储文件名
-//                    val filename = Environment.getExternalStorageDirectory().absolutePath + "/ble.bmp"
-//                    val file = File(filename)
-//                    if (!file.exists()) {
-//                        file.createNewFile()
-//                    }
-//                    val fileos = FileOutputStream(filename)
-//                    fileos.write(byteArray)
-//                    fileos.flush()
-//                    fileos.close()
-//                } catch (e: FileNotFoundException) {
-//                    e.printStackTrace()
-//                } catch (e: IOException) {
-//                    e.printStackTrace()
-//                }
             }
         }
     }
@@ -216,22 +190,18 @@ class MainActivity : BaseActivity() {
     })
 
     private fun checkGPSIsOpen(): Boolean {
-        val locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
-    //检查蓝牙是否支持及打开
     private fun checkBluetoothStatus() {
-        // 检查设备是否支持BLE4.0
         if (!BleManager.getInstance().isSupportBle) {
             toast("该设备不支持BLE蓝牙")
             finish()
         }
-
         if (!BleManager.getInstance().isBlueEnable) {
             BleManager.getInstance().enableBluetooth()
         }
-
         if (mac.isNotEmpty()) {
             Ble.connect(mac)
         }

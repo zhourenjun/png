@@ -113,7 +113,7 @@ object Ble {
             data,
             object : BleWriteCallback() {
                 override fun onWriteSuccess(current: Int, total: Int, justWrite: ByteArray) {
-
+                    send(current * 100 / total, "progress")
                 }
 
                 override fun onWriteFailure(exception: BleException) {
