@@ -159,11 +159,6 @@ object BitmapConverter {
         when (format.value / 8) {
             2 -> {
 
-                val R5 = (Color.red(pixel) * 249 + 1014) shr 11
-                val G6 = (Color.green(pixel) * 253 + 505) shr 10
-                val B5 = (Color.blue(pixel) * 249 + 1014) shr 11
-
-                buffer.put(writeShort((R5+G6+B5).toShort()))
             }
             3 -> {
                 buffer.put(Color.blue(pixel).toByte())
@@ -171,11 +166,6 @@ object BitmapConverter {
                 buffer.put(Color.red(pixel).toByte())
             }
         }
-    }
-
-
-    private fun rgb888ToRgb565(rgb888: Int): Int {
-        return rgb888 shr 19 and 31 shl 11 or (rgb888 shr 10 and 63 shl 5) or (rgb888 shr 3 and 31)
     }
 
     /**

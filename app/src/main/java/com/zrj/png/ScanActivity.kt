@@ -107,6 +107,6 @@ class DeviceAdapter : BaseQuickAdapter<MyBleDevice, BaseViewHolder>(R.layout.ite
         val tvConnect = helper.getView<TextView>(R.id.tv_connect)
         tvConnect.text =  mContext.getString(if (item.isConnect) R.string.connected else R.string.not_connected)
         tvConnect.textColor = mContext.colorCompat(if (item.isConnect) R.color.white else R.color.bg_gray)
-        tvConnect.background = mContext.drawable(if (item.isConnect) R.drawable.bg_red_radius_gradient else R.drawable.bg_gray_line)
+        tvConnect.background = mContext.drawable(if (item.isConnect) R.drawable.bg_red_radius_gradient2 else R.drawable.bg_gray_line2)
     }
 }
