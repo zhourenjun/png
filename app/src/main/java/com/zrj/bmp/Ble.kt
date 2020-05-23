@@ -1,4 +1,4 @@
-package com.zrj.png
+package com.zrj.bmp
 
 import android.bluetooth.BluetoothGatt
 import com.clj.fastble.BleManager
@@ -7,8 +7,8 @@ import com.clj.fastble.data.BleDevice
 import com.clj.fastble.exception.BleException
 import com.clj.fastble.scan.BleScanRuleConfig
 import com.clj.fastble.utils.HexUtil
-import com.zrj.png.utils.send
-import com.zrj.png.utils.sendTag
+import com.zrj.bmp.utils.send
+import com.zrj.bmp.utils.sendTag
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 
@@ -30,7 +30,7 @@ object Ble {
             }
 
             override fun onConnectSuccess(bleDevice: BleDevice, gatt: BluetoothGatt, status: Int) {
-                notify(bleDevice)
+//                notify(bleDevice)
                 send(bleDevice, "onConnectSuccess")
             }
 
@@ -56,7 +56,7 @@ object Ble {
             }
 
             override fun onConnectSuccess(bleDevice: BleDevice, gatt: BluetoothGatt, status: Int) {
-                notify(bleDevice)
+//                notify(bleDevice)
                 send(bleDevice, "onConnectSuccess")
             }
 
@@ -83,7 +83,9 @@ object Ble {
             }
 
             override fun onScanning(bleDevice: BleDevice) {
-                send(bleDevice, "onScanning")
+                if (bleDevice.name != null && bleDevice.name.isNotEmpty()) {
+                    send(bleDevice, "onScanning")
+                }
             }
 
             override fun onScanFinished(scanResultList: List<BleDevice>) {

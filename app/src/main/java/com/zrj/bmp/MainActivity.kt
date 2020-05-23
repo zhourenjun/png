@@ -1,6 +1,7 @@
-package com.zrj.png
+package com.zrj.bmp
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
@@ -19,7 +20,7 @@ import com.clj.fastble.data.BleDevice
 import com.gyf.barlibrary.ImmersionBar
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
-import com.zrj.png.utils.*
+import com.zrj.bmp.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.jetbrains.anko.startActivity
@@ -40,6 +41,7 @@ class MainActivity : BaseActivity() {
 
     override fun attachLayoutRes() = R.layout.activity_main
 
+    @SuppressLint("SetTextI18n")
     override fun initView() {
         ImmersionBar.setTitleBar(this, toolbar)
         iv_setting.click { startActivity<SettingActivity>() }
@@ -58,8 +60,10 @@ class MainActivity : BaseActivity() {
 
         seekBar.setOnTouchListener { _, _ -> true }
 
+        tv_num.text =  "${getString(R.string.completed)} 0%"
+
         ctl_send.click {
-            if (!isConnect){
+            if (!isConnect) {
                 toast(R.string.device_not_connected)
                 return@click
             }
@@ -100,6 +104,7 @@ class MainActivity : BaseActivity() {
 
     private var isConnect = false
 
+    @SuppressLint("SetTextI18n")
     override fun initData() {
         if (photoPath.isNotEmpty()) {
             val options = BitmapFactory.Options()
@@ -116,6 +121,10 @@ class MainActivity : BaseActivity() {
         receive<BleDevice>(false, "onConnectSuccess") {
             isConnect = true
             tv_status.text = getString(R.string.connected)
+        }
+
+        receive<Int>(false, "progress") {
+            tv_num.text =  "${getString(R.string.completed)} $it%"
         }
 
         receiveTag("onStartConnect") {

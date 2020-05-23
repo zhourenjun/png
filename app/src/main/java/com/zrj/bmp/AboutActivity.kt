@@ -1,10 +1,10 @@
-package com.zrj.png
+package com.zrj.bmp
 
 import android.annotation.SuppressLint
 import com.google.zxing.BarcodeFormat
 import com.gyf.barlibrary.ImmersionBar
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import com.zrj.png.utils.click
+import com.zrj.bmp.utils.click
 import kotlinx.android.synthetic.main.activity_about.*
 
 /**

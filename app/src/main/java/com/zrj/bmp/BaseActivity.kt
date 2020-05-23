@@ -1,10 +1,8 @@
-package com.zrj.png
+package com.zrj.bmp
 
 import android.os.Bundle
-import android.view.*
-import androidx.appcompat.widget.Toolbar
 import com.gyf.barlibrary.ImmersionBar
-import com.zrj.png.utils.locale.LocaleAwareCompatActivity
+import com.zrj.bmp.utils.locale.LocaleAwareCompatActivity
 
 abstract class BaseActivity : LocaleAwareCompatActivity() {
     protected abstract fun attachLayoutRes(): Int

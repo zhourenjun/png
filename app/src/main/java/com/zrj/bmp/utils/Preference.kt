@@ -1,10 +1,10 @@
 
-package com.zrj.png.utils
+package com.zrj.bmp.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import com.zrj.png.App
+import com.zrj.bmp.App
 import java.io.*
 import kotlin.reflect.KProperty
 

@@ -1,4 +1,4 @@
-package com.zrj.png.utils
+package com.zrj.bmp.utils
 
 import android.app.Activity
 import android.content.ContentResolver

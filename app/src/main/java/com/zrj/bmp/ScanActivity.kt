@@ -1,12 +1,13 @@
-package com.zrj.png
+package com.zrj.bmp
 
 import android.bluetooth.BluetoothDevice
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.clj.fastble.data.BleDevice
 import com.gyf.barlibrary.ImmersionBar
-import com.zrj.png.utils.*
+import com.zrj.bmp.utils.*
 import kotlinx.android.synthetic.main.activity_scan.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.jetbrains.anko.collections.forEachWithIndex
@@ -48,9 +49,13 @@ class ScanActivity : BaseActivity() {
             bindToRecyclerView(rv)
             setOnItemChildClickListener { _, _, position ->
                 val device = this.data[position]
-                if (device.isConnect) {
+                device.isConnecting = true
+                notifyItemChanged(position)
+                if (device.connected) {
+                    mac = ""
                     Ble.disconnect(device)
                 } else {
+                    mac = device.mac
                     Ble.connect(device)
                 }
             }
@@ -68,13 +73,17 @@ class ScanActivity : BaseActivity() {
         }
 
         receive<BleDevice>(true, "onScanning") {
-            deviceAdapter.addData(MyBleDevice(it.device))
+            val device = deviceAdapter.data.find { myBleDevice -> myBleDevice.device.address == it.mac }
+            if (device == null) {
+                deviceAdapter.addData(MyBleDevice(it.device))
+            }
         }
 
         receive<BleDevice>(true, "onDisConnected") {
             deviceAdapter.data.forEachWithIndex { i, myBleDevice ->
                 if (myBleDevice.mac == it.device.address) {
-                    myBleDevice.isConnect = false
+                    myBleDevice.connected = false
+                    myBleDevice.isConnecting = false
                     deviceAdapter.notifyItemChanged(i)
                     return@forEachWithIndex
                 }
@@ -82,10 +91,10 @@ class ScanActivity : BaseActivity() {
         }
 
         receive<BleDevice>(true, "onConnectSuccess") {
-            mac = it.mac
             deviceAdapter.data.forEachWithIndex { i, myBleDevice ->
                 if (myBleDevice.mac == it.device.address) {
-                    myBleDevice.isConnect = true
+                    myBleDevice.connected = true
+                    myBleDevice.isConnecting = false
                     deviceAdapter.notifyItemChanged(i)
                     return@forEachWithIndex
                 }
@@ -95,7 +104,8 @@ class ScanActivity : BaseActivity() {
 }
 
 class MyBleDevice(device: BluetoothDevice) : BleDevice(device) {
-    var isConnect = false
+    var connected = false
+    var isConnecting = false
 }
 
 
@@ -104,9 +114,14 @@ class DeviceAdapter : BaseQuickAdapter<MyBleDevice, BaseViewHolder>(R.layout.ite
     override fun convert(helper: BaseViewHolder, item: MyBleDevice) {
         helper.setText(R.id.tv_name, item.name)
             .addOnClickListener(R.id.tv_connect)
+
+        val progress = helper.getView<ProgressBar>(R.id.progress)
+        progress.setVisible(item.isConnecting)
+
         val tvConnect = helper.getView<TextView>(R.id.tv_connect)
-        tvConnect.text =  mContext.getString(if (item.isConnect) R.string.connected else R.string.not_connected)
-        tvConnect.textColor = mContext.colorCompat(if (item.isConnect) R.color.white else R.color.bg_gray)
-        tvConnect.background = mContext.drawable(if (item.isConnect) R.drawable.bg_red_radius_gradient2 else R.drawable.bg_gray_line2)
+        tvConnect.setVisible(!item.isConnecting)
+        tvConnect.text = mContext.getString(if (item.connected) R.string.connected else R.string.not_connected)
+        tvConnect.textColor = mContext.colorCompat(if (item.connected) R.color.white else R.color.tv_b2b2b2)
+        tvConnect.background = mContext.drawable(if (item.connected) R.drawable.bg_red_radius_gradient2 else R.drawable.bg_gray_line2)
     }
 }

@@ -1,11 +1,11 @@
-package com.zrj.png
+package com.zrj.bmp
 
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import com.clj.fastble.BleManager
 import com.tencent.bugly.Bugly
-import com.zrj.png.utils.locale.LocaleAwareApplication
+import com.zrj.bmp.utils.locale.LocaleAwareApplication
 import me.jessyan.autosize.AutoSizeConfig
 import kotlin.properties.Delegates
 

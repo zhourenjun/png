@@ -1,4 +1,4 @@
-package com.zrj.png.utils.locale
+package com.zrj.bmp.utils.locale
 
 import android.app.Activity
 import android.content.Context

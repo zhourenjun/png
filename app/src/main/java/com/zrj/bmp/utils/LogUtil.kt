@@ -1,10 +1,10 @@
-package com.zrj.png.utils
+package com.zrj.bmp.utils
 
 import android.util.Log
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import com.zrj.png.BuildConfig
+import com.zrj.bmp.BuildConfig
 
 /**
  * Created by zrj 2017/6/10.

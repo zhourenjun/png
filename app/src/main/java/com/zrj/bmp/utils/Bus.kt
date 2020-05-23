@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.zrj.png.utils
+package com.zrj.bmp.utils
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.*

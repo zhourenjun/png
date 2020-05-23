@@ -1,9 +1,9 @@
-package com.zrj.png
+package com.zrj.bmp
 
 import com.gyf.barlibrary.ImmersionBar
-import com.zrj.png.utils.Preference
-import com.zrj.png.utils.click
-import com.zrj.png.utils.setVisible
+import com.zrj.bmp.utils.Preference
+import com.zrj.bmp.utils.click
+import com.zrj.bmp.utils.setVisible
 import kotlinx.android.synthetic.main.activity_language.*
 import java.util.*
 

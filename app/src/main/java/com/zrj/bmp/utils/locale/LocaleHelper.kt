@@ -1,4 +1,4 @@
-package com.zrj.png.utils.locale
+package com.zrj.bmp.utils.locale
 
 import android.annotation.TargetApi
 import android.content.Context
