@@ -35,19 +35,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-<!--        <TextView-->
-<!--            android:id="@+id/tv_save"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:text="@string/save"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:gravity="center"-->
-<!--            android:textSize="@dimen/sp_16"-->
-<!--            android:paddingStart="@dimen/dp_12"-->
-<!--            android:paddingEnd="@dimen/dp_16"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/sp_16"
+            android:paddingStart="@dimen/dp_12"
+            android:paddingEnd="@dimen/dp_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

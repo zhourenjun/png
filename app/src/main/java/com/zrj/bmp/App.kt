@@ -5,7 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import com.clj.fastble.BleManager
 import com.tencent.bugly.Bugly
-import com.zeugmasolutions.localehelper.LocaleAwareApplication
+import com.zrj.bmp.utils.LocaleAwareApplication
 import me.jessyan.autosize.AutoSizeConfig
 import kotlin.properties.Delegates
 
@@ -23,6 +23,7 @@ class App : LocaleAwareApplication() {
     override fun onCreate() {
         super.onCreate()
         context = this
+
         AutoSizeConfig.getInstance().designWidthInDp = 360
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {

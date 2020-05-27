@@ -1,6 +1,7 @@
 package com.zrj.bmp
 
 import android.content.Intent
+import android.view.View
 import com.gyf.barlibrary.ImmersionBar
 import com.zrj.bmp.utils.Preference
 import com.zrj.bmp.utils.click
@@ -16,7 +17,7 @@ import java.util.*
 @ExperimentalCoroutinesApi
 class LanguageActivity : BaseActivity() {
 
-    private var lang: String by Preference("language", "en")
+    private var lang: String by Preference("language", "")
 
     override fun attachLayoutRes() = R.layout.activity_language
 
@@ -25,20 +26,26 @@ class LanguageActivity : BaseActivity() {
         iv_back.click { finish() }
         ctl_chinese.click {
             if (lang != "zh") {
-                updateLocale(Locale.CHINESE)
-                lang = "zh"
+                iv_zh.setVisible(true)
+                iv_en.setVisible(false)
             }
         }
         ctl_english.click {
             if (lang != "en") {
-                updateLocale(Locale.ENGLISH)
-                lang = "en"
+                iv_zh.setVisible(false)
+                iv_en.setVisible(true)
             }
+        }
+        tv_save.click {
+            lang = if (iv_zh.visibility == View.VISIBLE) "zh" else "en"
+            updateLocale(if (iv_zh.visibility == View.VISIBLE) Locale.CHINESE else Locale.ENGLISH)
+            val i = Intent(this, MainActivity::class.java)
+            startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
         }
     }
 
     override fun initData() {
         iv_zh.setVisible(lang == "zh")
-        iv_en.setVisible(lang == "en")
+        iv_en.setVisible(lang != "zh")
     }
 }

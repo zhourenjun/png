@@ -8,18 +8,19 @@ import com.gyf.barlibrary.ImmersionBar
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.activity_splash.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.jetbrains.anko.startActivity
 
 /**
  * 启动页
  * zrj 2020/5/16
  */
+@ExperimentalCoroutinesApi
 class SplashActivity : BaseActivity() {
 
     override fun attachLayoutRes() = R.layout.activity_splash
 
     override fun initData() {
-
     }
 
     override fun initView() {

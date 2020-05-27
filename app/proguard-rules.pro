@@ -199,20 +199,6 @@
 
 #-----------处理第三方依赖库---------
 
-################ retrofit ###############
--dontwarn retrofit2.**
--keep class retrofit2.** { *; }
--keepattributes Signature
--keepattributes Exceptions
-
-################ gson ###############
--keepattributes Signature
--keepattributes *Annotation*
--keep class sun.misc.Unsafe { *; }
--keep class com.google.gson.stream.** { *; }
--keep class com.ke.gson.** { *; }
-# Application classes that will be serialized/deserialized over Gson
--keep class com.sunloto.shandong.bean.** { *; }
 
 ################ glide ###############
 -keep public class * implements com.bumptech.glide.module.AppGlideModule
@@ -223,14 +209,6 @@
     public *;
 }
 
-################ okhttp ###############
--keepattributes Signature
--keepattributes *Annotation*
--keep class com.squareup.okhttp.** { *; }
--keep interface com.squareup.okhttp.** { *; }
--keep class okhttp3.** { *; }
--keep interface okhttp3.** { *; }
--dontwarn com.squareup.okhttp.**
 
 
 ################ annotation ###############
@@ -242,16 +220,6 @@
 -keep class me.jessyan.autosize.** { *; }
 -keep interface me.jessyan.autosize.** { *; }
 
-
-#PictureSelector 2.0
--keep class com.luck.picture.lib.** { *; }
-
--dontwarn com.yalantis.ucrop**
--keep class com.yalantis.ucrop** { *; }
--keep interface com.yalantis.ucrop** { *; }
-
-#Okio
--dontwarn org.codehaus.mojo.animal_sniffer.*
 
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}

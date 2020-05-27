@@ -49,16 +49,13 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity android:name="com.zrj.bmp.LanguageActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name="com.zrj.bmp.SettingActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name="com.zrj.bmp.ScanActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name="com.zrj.bmp.AboutActivity"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <provider
