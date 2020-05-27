@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
+import android.view.Gravity
 import androidx.appcompat.app.AlertDialog
 import com.clj.fastble.BleManager
 import com.clj.fastble.data.BleDevice
@@ -60,7 +61,7 @@ class MainActivity : BaseActivity() {
 
         seekBar.setOnTouchListener { _, _ -> true }
 
-        tv_num.text =  "${getString(R.string.completed)} 0%"
+        tv_num.text = "${getString(R.string.completed)} 0%"
 
         ctl_send.click {
             if (!isConnect) {
@@ -84,7 +85,7 @@ class MainActivity : BaseActivity() {
             options = quickPermissionsOption
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !checkGPSIsOpen()) {
-                AlertDialog.Builder(this)
+             val dialog = AlertDialog.Builder(this)
                     .setTitle(R.string.hint)
                     .setMessage(R.string.gpsNotifyMsg)
                     .setNegativeButton(R.string.cancel) { _, _ -> finish() }
@@ -96,6 +97,15 @@ class MainActivity : BaseActivity() {
                     }
                     .setCancelable(false)
                     .show()
+
+                val dialogWindow = dialog.window
+                val m = windowManager
+                val d = m.defaultDisplay
+                val p = dialogWindow?.attributes
+                p?.width = (d.width * 0.95).toInt()
+                p?.gravity = Gravity.CENTER
+                dialogWindow?.attributes = p
+
             } else {
                 checkBluetoothStatus()
             }
@@ -124,7 +134,7 @@ class MainActivity : BaseActivity() {
         }
 
         receive<Int>(false, "progress") {
-            tv_num.text =  "${getString(R.string.completed)} $it%"
+            tv_num.text = "${getString(R.string.completed)} $it%"
         }
 
         receiveTag("onStartConnect") {
@@ -155,8 +165,13 @@ class MainActivity : BaseActivity() {
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, cropImageUri)
                 intent.putExtra("crop", "true")
-                intent.putExtra("aspectX", 1)
-                intent.putExtra("aspectY", 1)
+                if (Build.MANUFACTURER == "HUAWEI" || Build.MODEL.contains("HUAWEI")) {
+                    intent.putExtra("aspectX", 9998)
+                    intent.putExtra("aspectY", 9999)
+                } else {
+                    intent.putExtra("aspectX", 1)
+                    intent.putExtra("aspectY", 1)
+                }
                 intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG)
                 intent.putExtra("outputX", 240)
                 intent.putExtra("outputY", 240)
@@ -188,7 +203,7 @@ class MainActivity : BaseActivity() {
     }
 
     private val quickPermissionsOption = QuickPermissionsOptions(permanentDeniedMethod = { req ->
-        AlertDialog.Builder(this@MainActivity)
+     val dialog = AlertDialog.Builder(this@MainActivity)
             .setTitle(R.string.hint)
             .setMessage(R.string.permission)
             .setPositiveButton(R.string.sure) { _: DialogInterface, _: Int ->
@@ -196,6 +211,14 @@ class MainActivity : BaseActivity() {
             }.setNegativeButton(R.string.cancel) { _: DialogInterface, _: Int ->
 
             }.show()
+
+        val dialogWindow = dialog.window
+        val m = windowManager
+        val d = m.defaultDisplay
+        val p = dialogWindow?.attributes
+        p?.width = (d.width * 0.95).toInt()
+        p?.gravity = Gravity.CENTER
+        dialogWindow?.attributes = p
     })
 
     private fun checkGPSIsOpen(): Boolean {

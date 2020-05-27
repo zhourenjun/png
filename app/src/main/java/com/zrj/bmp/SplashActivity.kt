@@ -2,6 +2,7 @@ package com.zrj.bmp
 
 import android.Manifest
 import android.content.DialogInterface
+import android.view.Gravity
 import androidx.appcompat.app.AlertDialog
 import com.gyf.barlibrary.ImmersionBar
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
@@ -39,7 +40,7 @@ class SplashActivity : BaseActivity() {
     }
 
     private val quickPermissionsOption = QuickPermissionsOptions(permanentDeniedMethod = { req ->
-        AlertDialog.Builder(this@SplashActivity)
+     val dialog =   AlertDialog.Builder(this@SplashActivity)
             .setTitle(R.string.hint)
             .setMessage(R.string.permission)
             .setPositiveButton(R.string.sure) { _: DialogInterface, _: Int ->
@@ -47,5 +48,13 @@ class SplashActivity : BaseActivity() {
             }.setNegativeButton(R.string.cancel) { _: DialogInterface, _: Int ->
 
             }.show()
+
+        val dialogWindow = dialog.window
+        val m = windowManager
+        val d = m.defaultDisplay
+        val p = dialogWindow?.attributes
+        p?.width = (d.width * 0.95).toInt()
+        p?.gravity = Gravity.CENTER
+        dialogWindow?.attributes = p
     })
 }

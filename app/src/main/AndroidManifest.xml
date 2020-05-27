@@ -46,23 +46,18 @@
             </intent-filter>
         </activity>
         <activity android:name="com.zrj.bmp.MainActivity"
-            android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity android:name="com.zrj.bmp.LanguageActivity"
-            android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name="com.zrj.bmp.SettingActivity"
-            android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name="com.zrj.bmp.ScanActivity"
-            android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name="com.zrj.bmp.AboutActivity"
-            android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 

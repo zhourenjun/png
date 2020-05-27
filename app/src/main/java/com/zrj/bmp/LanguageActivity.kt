@@ -1,16 +1,19 @@
 package com.zrj.bmp
 
+import android.content.Intent
 import com.gyf.barlibrary.ImmersionBar
 import com.zrj.bmp.utils.Preference
 import com.zrj.bmp.utils.click
 import com.zrj.bmp.utils.setVisible
 import kotlinx.android.synthetic.main.activity_language.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 
 /**
  * 设置
  * zrj 2020/5/18
  */
+@ExperimentalCoroutinesApi
 class LanguageActivity : BaseActivity() {
 
     private var lang: String by Preference("language", "en")

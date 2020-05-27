@@ -2,7 +2,7 @@ package com.zrj.bmp
 
 import android.os.Bundle
 import com.gyf.barlibrary.ImmersionBar
-import com.zrj.bmp.utils.locale.LocaleAwareCompatActivity
+import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
 
 abstract class BaseActivity : LocaleAwareCompatActivity() {
     protected abstract fun attachLayoutRes(): Int
