@@ -9,7 +9,7 @@
     <string name="language">Language</string>
     <string name="version_update">Version update</string>
     <string name="Language_selection">Language selection</string>
-    <string name="english" translatable="false">ENGLISH</string>
+    <string name="english" translatable="false">English</string>
     <string name="chinese" translatable="false">中文</string>
     <string name="exit_tip">Press again to exit the program</string>
     <string name="album">Album</string>
@@ -25,5 +25,4 @@
     <string name="device_not_connected">Device is not connected</string>
     <string name="please_select_picture">Please select a picture</string>
     <string name="completed">Completed</string>
-    <string name="save">Save</string>
 </resources>

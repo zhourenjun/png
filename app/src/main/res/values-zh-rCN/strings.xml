@@ -23,5 +23,4 @@
     <string name="device_not_connected">设备未连接</string>
     <string name="please_select_picture">请选择图片</string>
     <string name="completed">完成</string>
-    <string name="save">保存</string>
 </resources>

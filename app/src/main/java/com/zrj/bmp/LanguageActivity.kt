@@ -26,22 +26,22 @@ class LanguageActivity : BaseActivity() {
         iv_back.click { finish() }
         ctl_chinese.click {
             if (lang != "zh") {
-                iv_zh.setVisible(true)
-                iv_en.setVisible(false)
+                lang =  "zh"
+                gotoMain( Locale.CHINESE)
             }
         }
         ctl_english.click {
             if (lang != "en") {
-                iv_zh.setVisible(false)
-                iv_en.setVisible(true)
+                lang = "en"
+                gotoMain(Locale.ENGLISH)
             }
         }
-        tv_save.click {
-            lang = if (iv_zh.visibility == View.VISIBLE) "zh" else "en"
-            updateLocale(if (iv_zh.visibility == View.VISIBLE) Locale.CHINESE else Locale.ENGLISH)
-            val i = Intent(this, MainActivity::class.java)
-            startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
-        }
+    }
+
+    private fun gotoMain(locale: Locale){
+        updateLocale(locale)
+        val i = Intent(this, MainActivity::class.java)
+        startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
     }
 
     override fun initData() {
